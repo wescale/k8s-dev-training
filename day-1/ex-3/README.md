@@ -4,6 +4,11 @@
 
 1. Deploy the current folder to your Minikube cluster **with kubectl** (not VSCode)
 2. Investigate the deployed objects and fix errors
+    1. Mode privileged not authorized by 
+    2. sleep 3600 block the main container start
+    3. imagePullPolicy: Never cannot download the image
+    4. readiness /health does not exist
+  
 
 Questions:
 1. How do you see the logs of an init container?
