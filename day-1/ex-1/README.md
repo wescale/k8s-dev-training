@@ -6,6 +6,10 @@ Following steps must be executed on your local computer.
 
 1. Go to https://podman.io/getting-started/installation#installing-on-linux and follow installation steps
 2. Find the command to launch a Pod using pod.yaml description file
+```
+# Podman version 3.4.4
+podman play kube pod.yaml
+```
 
 Questions:
 
@@ -32,3 +36,6 @@ Questions:
 1. Where is launched the corresponding container?
 2. How do you display corresponding logs?
 
+```
+kubectl run hello-world --image=hello-world --restart=Never
+```
