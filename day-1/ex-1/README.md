@@ -12,9 +12,12 @@ podman play kube pod.yaml
 ```
 
 Questions:
-
 1. Where is launched the _productpage_ container?
 2. How do you display corresponding logs?
+```
+podman pod ps
+podman pod logs -c hello-world-nginx hello-world
+```
 
 ### Cleaning
 
