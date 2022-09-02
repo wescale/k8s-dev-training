@@ -11,6 +11,15 @@
 - Checkout the revision, version saved by Helm and using Helm API.
 - Clean up this installation using helm commands
 
+```sh
+helm create simpleapp
+helm install simpleapp ./simpleapp
+helm ls
+helm get manifest simpleapp
+kubectl get all
+helm uninstall simpleapp 
+rm -rf ./simpleapp
+```
 
 ##  Develop a new chart
 
@@ -27,12 +36,24 @@ The steps are:
 4. Test connectivity
 5. See how NOTES.txt describes how to test the application
 
+
+Sampleapp demo solution:
+- _helpers.tpl
+ This file is where you store all the reusable part. Typically something like application name, deployment name, service name, etc. In this file, we use a template function: for example here we defined `simpleapp.fullname` with value taken from `.Release.Name` and `.Chart.Name`. 
+
+- values.yaml: 
+We put the Image repository and container ports. At this point, we can use the chart later to deploy different application image and maybe publish it on different ports.
+
+```sh
+helm template test ./simpleapp --debug
+helm install simpleapp-backend ./sampleapp
+```
+
 ### Cleaning
 
 ```sh
 helm uninstall exampleapp
 ```
-
 
 ## Reuse and enhance an existing chart
 
@@ -44,6 +65,10 @@ The steps are:
 1. Create a second values file to overload what is different from default values
 1. Customize your chart to add environment variables
 
+
+```sh
+helm install simpleapp-frontend ./sampleapp -f frontend-values.yaml
+```
 
 ### Cleaning
 

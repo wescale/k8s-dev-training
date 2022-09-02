@@ -1,0 +1,12 @@
+# Default values for simpleapp.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
+image:
+  repository: eu.gcr.io/sandbox-training-225413/simplefrontend
+env:
+  - name: BACKEND_URL
+    value: "http://backend-svc:8080"
+service:
+  type: NodePort
+  port: 80

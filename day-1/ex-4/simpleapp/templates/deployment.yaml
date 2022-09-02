@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "simpleapp.fullname" . }}
+  labels:
+    app.kubernetes.io/stack: 
+      {{ include "simpleapp.fullname" . }}
+    {{- include "simpleapp.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "simpleapp.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "simpleapp.fullname" . }}
+    spec:
+      containers:
+        - name: {{ include "simpleapp.fullname" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+

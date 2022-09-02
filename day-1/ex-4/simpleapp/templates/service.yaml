@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "simpleapp.fullname" . }}
+  labels:
+    app.kubernetes.io/stack: 
+      {{ include "simpleapp.fullname" . }}
+    {{- include "simpleapp.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: http
+      protocol: TCP 
+      name: http
+  selector:
+    app: {{ include "simpleapp.fullname" . }}
