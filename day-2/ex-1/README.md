@@ -27,7 +27,39 @@ curl -k -H "Authorization: Bearer $TOKEN" https://kubernetes.default.svc/api/v1
   - inside the default namespace: https://kubernetes.default.svc/api/v1/namespaces/default/pods
   - inside the current namespace: https://kubernetes.default.svc/api/v1/namespaces/sa-demo/pods
 
-What do you notice ?
+{
+  "kind": "APIResourceList",
+  "groupVersion": "v1",
+  "resources": [
+    {
+      "name": "bindings",
+      "singularName": "",
+      "namespaced": true,
+      "kind": "Binding",
+      "verbs": [
+        "create"
+      ]
+    },
+   (...)
+}
+```
+
+- Within your pod, try to you use this token to list all the Pods: https://kubernetes.default.svc/api/v1/default/pods
+and https://kubernetes.default.svc/api/v1/sa-demo/pods
+ 
+ ```sh
+# curl -H "Authorization: Bearer $TOKEN" https://kubernetes.default.svc/api/v1/default/pods --insecure
+
+ "message": "sa-demo \"pods\" is forbidden: User \"system:serviceaccount:default:default\" cannot get resource \"sa-demo\" in API group \"\" at the cluster scope",
+ 
+ # curl -H "Authorization: Bearer $TOKEN" https://kubernetes.default.svc/api/v1/sa-demo/pods --insecure
+
+  "message": "sa-demo \"pods\" is forbidden: User \"system:serviceaccount:default:default\" cannot get resource \"sa-demo\" in API group \"\" at the cluster scope",
+
+ ```
+
+ What do you notice ? > The default service account does not have enough rights to perform this query. 
+ => We will create our own ServiceAccount and provide it with the additional rights it needs for this action.
 
 # Customize a Service Account with a Role
 
@@ -41,7 +73,17 @@ What kind of Role do you need ? Role or ClusterRole ?
   - https://kubernetes.default.svc/api/v1/namespaces/sa-demo/pods and 
   - https://kubernetes.default.svc/api/v1/namespaces/default/pods
  
+ ```sh
+ $ kubectl exec -n sa-demo -it ratings -- sh
+# apk add --update curl
+# TOKEN=$(cat /run/secrets/kubernetes.io/serviceaccount/token)
+# curl -H "Authorization: Bearer $TOKEN" https://kubernetes.default.svc/api/v1/ --insecure
+# curl -H "Authorization: Bearer $TOKEN" https://kubernetes.default.svc/api/v1/namespaces/sa-demo/pods --insecure
+# curl -H "Authorization: Bearer $TOKEN"  https://kubernetes.default.svc/api/v1/namespaces/default/pods --insecure
+  ```
 What do you notice when you call the api namespaces/default/pods ?
+=> Yes got a reason Forbidden when call the api namespaces/default/pods 
+
 What is the solution to solve this ?
 
 - Delete the namespace `kubectl delete ns sa-demo`
