@@ -29,12 +29,16 @@ kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/secrets-s
 
 - Check that pods are correctly running in the **kube-system** namespace
 - How many pods do you see ?
+> 3 of each
 - Why do we have that amount ?
+> Pods are deployed with Daemonsets
 - What is it used for ?
+> Kubernetes needs to mount the secret into files stored on the pod node
 
 
 - Deploy the secretProviderClass object from the `secretProviderClass.yaml` file
 - What is defined in this object ?
+> Secrets and paths that will be usable by pods on the `wsc-training-db` namespace
 
 
 
@@ -43,18 +47,23 @@ kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/secrets-s
 - Create a new namespace called `wsc-training-db`
 
 - Check the `pod-sa.yaml` file. Do you notice something ? What do you think this is used for ?
+> There is an annotation to specify the GCP service account to be used to give permissions to the pod
 
 - Deploy the service account
 
 - Check the **volumes** and **volumeMounts** sections of the `pod.yaml` file and try to understand what they do.
+> Use the secrets-store-csi-driver to retrieve the secrets and mount it as a volume. We also have the secretProvider class specified in the `volumeAttributes` section
 
 - Deploy the pod
 
 - Connect to the pod and look what is inside the mounted file
+    ```
+    kubectl exec -n wsc-training-db -it wsc-db-client -- sh
+    ```
 
 - Use these credentials to connect to the Cloud SQL postgres instance
     ```
-    psql postgresql://XXXXXXXXXXX/postgres -c 'select 1'
+    psql postgresql://training:<PASSWORD>@<IP>/postgres -c 'select 1'
     ```
 
 - Delete the `wsc-training-db` namespace
