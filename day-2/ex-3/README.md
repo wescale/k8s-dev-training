@@ -33,7 +33,7 @@ spec:
       storage: 2Gi
 ```
 
-Declare the claim (be careful, the provided `.yaml` file may be incorrect....)
+Declare the claim (be careful, the provided `.yaml` file may be incorrect...)
 ```sh
 kubectl apply -f pv-claim.yaml
 ```
@@ -44,6 +44,7 @@ kubectl get pv
 ```
 
 Why?
+> Because it is dynamically provisioned with the PVC through the storageclass
 
 ## Create a pod which references the Persistent Volume Claim
 
@@ -107,11 +108,14 @@ Apply the changes.
 
 Is it possible?
 
+> After some time yes because it needs to dettach the disk from the node and attach it to the new one before starting the pod.
+
 # Deploy a MariaDB statefulset
 
 Deploy three MariaDB instances using the `statefulset-mariadb.yaml` file
 
 How many persistent volumes are created ? Why ? What is their characteristic ?
+> There are 3 PVs, one per mariaDB replica. Their name is static to be able to detach/attach them to pods.
 
 Connect to the `mariadb-sts-0` pod and connect to the database (there is a password for the root user somewhere)
 
@@ -130,7 +134,11 @@ Delete the `mariadb-sts-0`, reconnect to the mysql database and check that the d
 
 Now connect to the `mariadb-sts-1` pod and look for the data. Is it there ? Why ?
 
+> No it's no there because we deploy 3 single MariaDB instance. There is no data synchronization
+
 What is the solution to avoid this ?
+
+> Deploy a MySQL Cluster to ensure operations are replicated throughout every instances
 
 
 # Clean
