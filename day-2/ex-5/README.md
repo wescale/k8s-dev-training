@@ -2,6 +2,7 @@
 
 In this exercise you will see how to watch pod logs and how to centralize them with tools like Loki and Grafana
 
+Check the resources created
 
 # Pod logs
 

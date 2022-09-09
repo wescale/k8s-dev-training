@@ -34,10 +34,19 @@ Can you tell what the result means ?
 Using the `kube_pod_info` metric, retrieve the information of the `prometheus-kube-prometheus-stack-prometheus-0` pod on the `monitoring` namespace (tip: you might have to use some filters to facilitate your search). You can use this [documentation](https://prometheus.io/docs/prometheus/latest/querying/basics/) to help you.
 
 
+```
+kube_pod_info{namespace="monitoring", pod="prometheus-kube-prometheus-stack-prometheus-0"}
+```
+
 Find the number of pods that have containers that asks for memory limit over 200MB across the whole cluster
+```
+count(kube_pod_container_resource_limits > 209715200)
+```
 
 Display the sum of pods requested CPU per node
-
+```
+sum by(node) (kube_pod_container_resource_requests{resource="cpu"})
+```
 
 # Monitor our own pods
 
@@ -85,6 +94,13 @@ What happens if you scale up the deployment ?
 Check that you can access Grafana(replace the X by value of your assigned project): http://grafana.wsc-cnd-dev-k8s-X.wescaletraining.fr/
 
 To get the credentials, you have to look inside the `kube-prometheus-stack-grafana` secret in the monitoring namespace
+<<<<<<< HEAD
+=======
+```
+kubectl get secret -n monitoring kube-prometheus-stack-grafana -o jsonpath={.data.admin-user} | base64 -d
+kubectl get secret -n monitoring kube-prometheus-stack-grafana -o jsonpath={.data.admin-password} | base64 -d
+```
+>>>>>>> 0f1240f (feat(): add solution for logs exercise)
 
 When connected, look for the `Kubernetes / Compute Resources / Cluster` dashboard which gives an overview of the resource usage of the cluster
 Can you find out the meaning of each panel ?
