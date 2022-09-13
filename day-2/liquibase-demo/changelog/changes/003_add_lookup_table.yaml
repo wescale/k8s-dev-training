@@ -1,0 +1,13 @@
+databaseChangeLog:  
+  - changeSet:  
+      id: 3  
+      author: wescale  
+      changes:  
+      - addLookupTable:  
+          existingTableName: person  
+          existingColumnName: state  
+          newTableName: state  
+          newColumnName: id  
+          newColumnDataType: char(2)
+      - tagDatabase:
+          tag: v3

@@ -1,0 +1,7 @@
+databaseChangeLog:  
+  - preConditions:
+    - runningAs:  
+        username: training 
+
+  - includeAll:
+      path: changes

@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-rollback
+  namespace: wsc-training-db
+spec:
+  template:
+    spec:
+      containers:
+      - command:
+        - /liquibase/scripts/rollback.sh
+        name: db-rollback
+        image: docker.io/rdavaze/liquibase-postgres:4.15.0
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: CREDENTIALS_FILE
+            value: /var/secrets/value
+          - name: TAG_NAME
+            value: v1
+        volumeMounts:
+          - mountPath: "/var/secrets"
+            name: database-credentials
+            readOnly: true
+      volumes:
+      - name: database-credentials
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: training-database-credentials
+      serviceAccountName: wsc-db-client
+      restartPolicy: Never
+  backoffLimit: 4

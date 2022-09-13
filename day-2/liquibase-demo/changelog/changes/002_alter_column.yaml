@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:  
+      id: 2  
+      author: wescale  
+      changes:  
+      - addColumn:  
+          tableName: person  
+          columns:  
+          - column:  
+              name: username  
+              type: varchar(8)
+      - tagDatabase:
+          tag: v2
