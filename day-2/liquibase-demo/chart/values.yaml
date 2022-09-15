@@ -1,0 +1,19 @@
+project: wsc-cnd-dev-k8s-0
+
+
+demo:
+  image: docker.io/codingpuss/postgres-client
+  tag: latest
+
+schemaMigration:
+  image: docker.io/rdavaze/liquibase-postgres
+  tag: 4.15.0
+
+  rollback:
+    tag: 1.0.1
+
+secretProviderClass:
+  name: training-database-credentials
+
+serviceAccount:
+  name: wsc-db-client

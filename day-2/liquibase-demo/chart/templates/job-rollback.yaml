@@ -1,8 +1,10 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: db-rollback
-  namespace: wsc-training-db
+  name: "{{ .Release.Name }}-db-rollback"
+  annotations:
+    helm.sh/hook: pre-rollback
+    helm.sh/hook-delete-policy: before-hook-creation
 spec:
   template:
     spec:
@@ -10,13 +12,13 @@ spec:
       - command:
         - /liquibase/scripts/rollback.sh
         name: db-rollback
-        image: docker.io/rdavaze/liquibase-postgres:4.15.0
+        image: "{{ .Values.schemaMigration.image }}:{{ .Values.schemaMigration.tag }}"
         imagePullPolicy: IfNotPresent
         env:
           - name: CREDENTIALS_FILE
             value: /var/secrets/value
           - name: TAG_NAME
-            value: v1
+            value: "{{ .Values.schemaMigration.rollback.tag }}"
         volumeMounts:
           - mountPath: "/var/secrets"
             name: database-credentials
@@ -27,7 +29,7 @@ spec:
           driver: secrets-store.csi.k8s.io
           readOnly: true
           volumeAttributes:
-            secretProviderClass: training-database-credentials
-      serviceAccountName: wsc-db-client
+            secretProviderClass: "{{ .Values.secretProviderClass.name }}"
+      serviceAccountName: "{{ .Values.serviceAccount.name }}"
       restartPolicy: Never
   backoffLimit: 4

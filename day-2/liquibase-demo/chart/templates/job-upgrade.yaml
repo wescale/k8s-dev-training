@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-db-upgrade"
+  annotations:
+    helm.sh/hook: pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+spec:
+  template:
+    spec:
+      containers:
+      - name: db-upgrade
+        image: "{{ .Values.schemaMigration.image }}:{{ .Values.schemaMigration.tag }}"
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: CREDENTIALS_FILE
+            value: /var/secrets/value
+        volumeMounts:
+          - mountPath: "/var/secrets"
+            name: database-credentials
+            readOnly: true
+      volumes:
+      - name: database-credentials
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "{{ .Values.secretProviderClass.name }}"
+      serviceAccountName: "{{ .Values.serviceAccount.name }}"
+      restartPolicy: Never
+  backoffLimit: 4

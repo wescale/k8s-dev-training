@@ -25,4 +25,4 @@ databaseChangeLog:
               name: state  
               type: char(2)
       - tagDatabase:
-          tag: v1
+          tag: 1.0.1

@@ -1,5 +1,13 @@
 # Liquibase Demo
 
+Clone the repository on the bastion
+```
+git clone -b solution https://github.com/wescale/kubernetes-dev-training
+
+cd kubernetes-dev-training/day-2/demo-liquibase
+```
+
+
 Show changelog files
   - Root changelog that is including all the changes from the `changes` folder
   - `001_create_table` that creates a new table
@@ -15,31 +23,48 @@ Show dockerfile and the scripts
   - Image is already pushed to dockerhub (docker.io/rdavaze/liquibase-postgres:4.15.0)
 
 
-Show `manifests.yaml` file and explain it
+Show the chart in the `chart` directory and explain it
   - We use the same objects as the second exercise
-  - The difference is that we have an init container that does the DB migration
   - Credentials are passed via the CSI Secret Store like in exercise 2
-  - We just source them before launching the migration in the `start.sh` script
+  - We just source them before launching the migration in the `start.sh` and `rollback.sh` scripts
+  - We have a job for schema migration that will be triggered at the `pre-upgrade` phase (explain the annotations & spec)
+  - We have a job for schema migration that will be triggered at the `pre-rollback` phase (explain the annotations & spec)
+  - Show the `Chart.yaml` and `values.yaml` files
+  
 
-
-Apply the manifests file
+Install the chart
 ```
-kubectl apply -f manifests.yaml
+helm install demo-liquibase ./chart -n wsc-training-db -f /chart/values.yaml --create-namespace
 ```
 
-Check that the pod is running and that it is in init state
+Check that the pod is running
 ```
 kubectl get po -n wsc-training-db
 ```
 
-Show the logs of the init container
+Open a second terminal to watch pods being created
 ```
-kubectl logs demo-liquibase -n wsc-training-db -c db-migration -f
+watch kubectl get po -n wsc-training-db
+```
+
+Launch an upgrade
+```
+# Change the applicationVersion to 1.0.3
+
+# Perform the upgrade
+helm upgrade demo-liquibase /chart -n wsc-training-db -f /chart/values.yaml
+```
+
+Watch pods being created
+
+Show the logs of the upgrade job
+```
+kubectl logs job/demo-liquibase-db-upgrade -n wsc-training-db
 ```
 
 Connect to the main pod and show the changes are applied successfully
 ```
-kubectl exec -it demo-liquibase -n wsc-training-db -c mypod -- sh
+kubectl exec -it demo-liquibase -n wsc-training-db -c demo-liquibase -- sh
 
 # Retrieve connection information
 source /var/secrets/value
@@ -60,16 +85,15 @@ SELECT * FROM databasechangelog;
 SELECT filename,description,tag FROM databasechangelog;
 ```
 
-Show the job spec in `job-rollback.yaml` file to apply the rollback
-
-Open a new terminal and deploy the job
+Show the `schemaMigration.rollback.tag` value in the chart and how it is passed to the rollback job
+Rollback the helm release
 ```
-kubectl apply -f job-rollback.yaml
+helm rollback demo-liquibase -n wsc-training-db
 ```
 
 Show the job logs
 ```
-kubectl logs job/db-rollback -n wsc-training-db -f
+kubectl logs job/demo-liquibase-db-rollback -n wsc-training-db
 ```
 
 Check that the rollback went well (on the pg client pod)

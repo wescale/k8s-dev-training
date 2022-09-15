@@ -1,0 +1,6 @@
+apiVersion: v2
+name: liquibase-demo
+description: Liquibase schema upgrade demo app
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
