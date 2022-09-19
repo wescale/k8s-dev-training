@@ -48,4 +48,6 @@ Go to the `Chaos Scenarios` tab and launch your first scenario
 
 # Create your custom scenario
 
-TODO
+As a bonus, you can try to build your own scenario using the existing experiments from the ChaosHub
+
+What experiments did you choose ? What did you expect to happen ? Did it happen ?
