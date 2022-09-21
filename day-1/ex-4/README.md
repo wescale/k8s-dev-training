@@ -12,13 +12,13 @@
 - Clean up this installation using helm commands
 
 ```sh
-helm create simpleapp
-helm install simpleapp ./simpleapp
+helm create exampleapp
+helm install exampleapp ./exampleapp
 helm ls
-helm get manifest simpleapp
+helm get manifest exampleapp
 kubectl get all
-helm uninstall simpleapp 
-rm -rf ./simpleapp
+helm uninstall exampleapp 
+rm -rf ./exampleapp
 ```
 
 ##  Develop a new chart
