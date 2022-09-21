@@ -7,7 +7,7 @@ image:
   pullPolicy: IfNotPresent
   ports:
     containerPort: 80
-env: {}
+env: []
 service:
   type: ""
   port: 8080
