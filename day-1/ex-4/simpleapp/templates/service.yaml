@@ -7,7 +7,7 @@ metadata:
       {{ include "simpleapp.fullname" . }}
     {{- include "simpleapp.labels" . | nindent 4 }}
 spec:
-  type: ClusterIP
+  type: {{ .Values.service.type }}
   ports:
     - port: 8080
       targetPort: http
