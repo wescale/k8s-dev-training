@@ -75,7 +75,7 @@ spec:
 ```
 
 ```sh
-kubectl create -f service-monitor.yml
+kubectl create -f service-monitor.yaml
 ```
 
 Once the pod is created, view the returned metrics executing a `curl` command on localhost:8080/metrics.
