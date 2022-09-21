@@ -94,13 +94,10 @@ What happens if you scale up the deployment ?
 Check that you can access Grafana(replace the X by value of your assigned project): http://grafana.wsc-cnd-dev-k8s-X.wescaletraining.fr/
 
 To get the credentials, you have to look inside the `kube-prometheus-stack-grafana` secret in the monitoring namespace
-<<<<<<< HEAD
-=======
 ```
 kubectl get secret -n monitoring kube-prometheus-stack-grafana -o jsonpath={.data.admin-user} | base64 -d
 kubectl get secret -n monitoring kube-prometheus-stack-grafana -o jsonpath={.data.admin-password} | base64 -d
 ```
->>>>>>> 0f1240f (feat(): add solution for logs exercise)
 
 When connected, look for the `Kubernetes / Compute Resources / Cluster` dashboard which gives an overview of the resource usage of the cluster
 Can you find out the meaning of each panel ?
