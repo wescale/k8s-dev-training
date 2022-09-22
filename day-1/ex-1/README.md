@@ -14,6 +14,12 @@ Questions:
 1. Where is launched the _nginx_ container?
 2. How do you display corresponding logs?
 
+### Cleaning
+
+```
+podman pod rm hello-world
+```
+
 ## Installation of Minikube
 
 1. Go to https://minikube.sigs.k8s.io/docs/start/ and follow from step 1 to 3

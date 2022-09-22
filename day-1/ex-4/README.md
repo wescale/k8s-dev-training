@@ -28,6 +28,12 @@ The steps are:
 4. Test connectivity
 5. See how NOTES.txt describes how to test the application
 
+### Cleaning
+
+```sh
+helm uninstall exampleapp
+```
+
 
 ## Reuse and enhance an existing chart
 
@@ -40,7 +46,7 @@ The steps are:
 1. Customize your chart to add environment variables
 
 
-## Clean
+### Cleaning
 
 ```sh
 helm uninstall simpleapp-backend simpleapp-frontend

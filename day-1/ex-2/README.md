@@ -11,6 +11,13 @@ Following steps must be executed on your local computer.
 4. Fix suggested change (warning) using inline documentation and completion
 5. Deploy the descriptor using "Kubernetes: Apply" command (ctrl+shift+p)
 
+### Cleaning
+
+"Kubernetes: Delete" command (ctrl+shift+p)
+or
+```
+kubectl delete deployment nginx 
+```
 
 ## Live coding with Scaffold
 
@@ -21,3 +28,6 @@ Following steps must be executed on your local computer.
 5. You can open your browser by typing `minikube service nginx-svc`
 5. Change the content of index.html and watch how Skaffold reacts, reload the web page
 
+### Cleaning
+
+Shutdown the `skaffold dev` command with ctrl+c, it will cascade delete the K8S Objects.

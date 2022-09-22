@@ -2,7 +2,7 @@
 
 ## PodSpec focus
 
-1. Deploy the current folder to your Minikube cluster
+1. Deploy the current folder to your Minikube cluster **with kubectl** (not VSCode)
 2. Investigate the deployed objects and fix errors
 
 Questions:
