@@ -97,3 +97,10 @@ You can also import other dashboards if you want. Take a look at the Grafana web
 # Bonus
 
 Create a Grafana Dashboard to view the number of pods in demo-prom-app service
+
+# Cleaning
+
+We keep the Prometheus stack for further usages
+```
+kubectl delete -f .
+```
