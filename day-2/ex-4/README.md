@@ -55,6 +55,7 @@ kind: ServiceMonitor
 metadata:
   name: demo-prom-app
   labels:
+    release: kube-prometheus-stack
     team: frontend
 spec:
   selector:
