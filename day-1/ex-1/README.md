@@ -6,18 +6,17 @@ Following steps must be executed on your local computer.
 
 1. Go to https://podman.io/getting-started/installation#installing-on-linux and follow installation steps
 2. Find the command to launch a Pod using pod.yaml description file
-    1. There is one thing to fix in the description file
-    2. Hint: Which registry is accessible by default?
 
 Questions:
 
-1. Where is launched the _nginx_ container?
+1. Where is launched the _productpage_ container?
 2. How do you display corresponding logs?
 
 ### Cleaning
 
 ```
-podman pod rm hello-world
+podman pod stop bookinfo
+podman pod rm bookinfo
 ```
 
 ## Installation of Minikube

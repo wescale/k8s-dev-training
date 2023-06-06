@@ -1,8 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: hello-world
+  name: bookinfo
 spec:
   containers:
-  - name: nginx
-    image: jitesoft/nginx:1.23.1
+    - name: productpage
+      image: docker.io/istio/examples-bookinfo-productpage-v1:1.17.0
+      imagePullPolicy: IfNotPresent
+
