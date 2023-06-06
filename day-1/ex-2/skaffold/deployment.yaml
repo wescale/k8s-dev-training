@@ -1,24 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: details
   labels:
-    app: nginx
-  name: nginx
+    app: details
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: details
   template:
     metadata:
       labels:
-        app: nginx
+        app: details
     spec:
       containers:
-      - image: IMAGE
-        name: html
+      - name: details
+        image: IMAGE
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9080
         resources:
           limits:
-            memory: 10Mi
+            memory: 100Mi
             cpu: 100m
 

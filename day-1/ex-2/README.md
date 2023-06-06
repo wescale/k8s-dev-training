@@ -16,7 +16,7 @@ Following steps must be executed on your local computer.
 "Kubernetes: Delete" command (ctrl+shift+p)
 or
 ```
-kubectl delete deployment nginx 
+kubectl delete deployment details 
 ```
 
 ## Live coding with Skaffold
@@ -25,8 +25,8 @@ kubectl delete deployment nginx
 2. Go to day-1/ex-2/skaffold directory and type `skaffold init`
 3. Look at generated skaffold.yaml file
 4. Run `skaffold dev` to launch the deployment in watch mode
-5. You can open your browser by typing `minikube service nginx-svc`
-5. Change the content of index.html and watch how Skaffold reacts, reload the web page
+5. You can open your browser by typing `minikube service details` then go to /health URL
+5. Change the content of details.rb (line 34 for /health content) and watch how Skaffold reacts, reload the web page
 
 ### Cleaning
 

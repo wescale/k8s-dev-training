@@ -1,20 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: details
   labels:
-    app: nginx
-  name: nginx
+    app: details
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: details
   template:
     metadata:
       labels:
-        app: nginx
+        app: details
     spec:
       containers:
-      - image: nginx:1.23.1
-        name: html
+      - name: details
+        image: docker.io/istio/examples-bookinfo-details-v1:1.17.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9080
 
