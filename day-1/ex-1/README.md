@@ -12,11 +12,12 @@ podman play kube pod.yaml
 ```
 
 Questions:
+
 1. Where is launched the _productpage_ container?
 2. How do you display corresponding logs?
 ```
 podman pod ps
-podman pod logs -c hello-world-nginx hello-world
+podman pod logs bookinfo
 ```
 
 ### Cleaning
@@ -32,13 +33,21 @@ podman pod rm bookinfo
 2. Type `docker ps` and explain what is running
 3. Type `kubectl get nodes` to check how is distributed your cluster
 4. Launch a Pod with the image hello-world once (without restart) using one command line
+```
+kubectl run hello-world --image=hello-world --restart=Never
+```
 5. Deploy the preceding pod.yaml file
+```
+kubectl apply -f pod.yaml
+```
 
 Questions:
 
 1. Where is launched the corresponding container?
-2. How do you display corresponding logs?
-
 ```
-kubectl run hello-world --image=hello-world --restart=Never
+docker exec minikube docker ps -a
+```
+2. How do you display corresponding logs?
+```
+kubectl logs bookinfo
 ```
