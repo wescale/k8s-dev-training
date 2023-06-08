@@ -117,13 +117,19 @@ Connect to the `mariadb-sts-0` pod and connect to the database (there is a passw
 
 Create a database, a table and insert some data in it
 ```
-CREATE DATABASE wsc_training;
-USE wsc_training;
-CREATE TABLE Trainees (Id MEDIUMINT NOT NULL AUTO_INCREMENT, FirstName VARCHAR(255), LastName VARCHAR(255), PRIMARY KEY (Id));
-INSERT INTO Trainees (FirstName, LastName) VALUES ("MyFirstName", "MyLastName");
+CREATE DATABASE test;
+USE test;
+
+CREATE TABLE `ratings` (
+  `ReviewID` INT NOT NULL,
+  `Rating` INT,
+  PRIMARY KEY (`ReviewID`)
+);
+INSERT INTO ratings (ReviewID, Rating) VALUES (1, 5);
+INSERT INTO ratings (ReviewID, Rating) VALUES (2, 4);
 
 # Check that the data has correctly been inserted
-SELECT * FROM Trainees;
+SELECT * FROM ratings;
 ```
 
 Delete the `mariadb-sts-0`, reconnect to the mysql database and check that the database is still there
