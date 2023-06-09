@@ -1,23 +1,19 @@
 #!/bin/bash
 
+# Update the package list and install the Cloud SDK
+apt-get update && apt-get install -y nano unzip git xsel jq apt-transport-https ca-certificates gnupg
+
 # Add the Cloud SDK distribution URI as a package source
-echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+echo "deb [signed-by=/etc/apt/trusted.gpg.d/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 
 # Import the Google Cloud Platform public key
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /usr/share/keyrings/cloud.google.gpg
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg -O
+gpg --dearmor -o cloud.google.gpg apt-key.gpg
+rm apt-key.gpg
+mv cloud.google.gpg /etc/apt/trusted.gpg.d/cloud.google.gpg
 
 # Update the package list and install the Cloud SDK
-apt-get update && sudo apt-get install -y kubectl nano unzip git xsel jq google-cloud-sdk-gke-gcloud-auth-plugin
-
-# Remove nodejs 12.X
-apt-get remove -y nodejs
-apt autoremove -y
-
-# Install nodejs 14.X
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-apt-get install -y nodejs
-
-npm i -g create-react-app
+apt-get update && apt-get install -y kubectl google-cloud-sdk-gke-gcloud-auth-plugin
 
 gcloud config set compute/zone europe-west1-b
 
