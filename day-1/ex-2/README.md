@@ -31,3 +31,7 @@ kubectl delete deployment details
 ### Cleaning
 
 Shutdown the `skaffold dev` command with ctrl+c, it will cascade delete the K8S Objects.
+
+## Remote IDE
+
+[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://shell.cloud.google.com/cloudshell/open?cloudshell_git_repo=https://github.com/wescale/k8s-dev-training.git&cloudshell_tutorial=tutorial.md&show=ide%2Cterminal&cloudshell_git_branch=main&cloudshell_workspace=day-1/ex-2/)
