@@ -3,15 +3,13 @@ kind: Service
 metadata:
   name: {{ include "simpleapp.fullname" . }}
   labels:
-    app.kubernetes.io/stack: 
-      {{ include "simpleapp.fullname" . }}
     {{- include "simpleapp.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: 8080
+    - port: {{ .Values.service.port }}
       targetPort: http
-      protocol: TCP 
+      protocol: TCP
       name: http
   selector:
-    app: {{ include "simpleapp.fullname" . }}
+    {{- include "simpleapp.selectorLabels" . | nindent 4 }}
