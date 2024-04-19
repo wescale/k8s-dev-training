@@ -60,3 +60,10 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "simpleapp.environmentVariables" -}}
+- name: "KEY_1"
+  value: "VALUE_1"
+- name: "KEY_2"
+  value: "VALUE_2"
+{{- end}}
